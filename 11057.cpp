@@ -1,31 +1,48 @@
 #include <bits/stdc++.h>
+#define vi vector<int>
+#define pi pair<int,int>
+#define vii vector<pair<int,int>>
+#define ll long long int
+#define x first
+#define y second
 using namespace std;
 int main() {
-//freopen("output.txt","w",stdout);
-    int n;
-    while(cin >> n){
-    vector<int> books;
-    for(int i=0;i<n;i++){
-        int temp;
-        cin >> temp;
-        books.push_back(temp);
-    }
-    sort(books.begin(),books.end());
-    int money;
-    cin >> money;
-    int a=100000;
-    int b=0;
-    for(int j=0;j<books.size();j++){
-        int i=books[j];
-        vector<int> copy=books;
-        copy.erase(copy.begin()+j);
-        if(binary_search(copy.begin(),copy.end(),(money-i))){
-            if(abs(i-(money-i))<abs(a-b)){
-                a=i;
-                b=money-i;
+    //freopen("output.txt","w",stdout);
+    //freopen("input.txt","r",stdin);
+    ios ::sync_with_stdio(false);
+    cin.tie(nullptr);
+    cout.tie(nullptr);
+    int N;
+    while(scanf("%d",&N)!=EOF) {
+        int ar[N];
+        map<int,int> m;
+        for(int i=0; i<N; i++) {
+            scanf("%d", &ar[i]);
+            if(m.count(ar[i])>0){
+                m[ar[i]]++;
+            }else{
+                m[ar[i]]=1;
             }
         }
-    }
-    cout <<"Peter should buy books whose prices are " << a << " and " << b << ".\n" << endl;
+        int M;
+        scanf("%d",&M);
+        int I=-1;
+        int J=-1;
+        for(int i=0; i<N; i++) {
+            if((m.count((M-ar[i]))>0 && ar[i]!=(M-ar[i])) || (m[ar[i]]>1 && ar[i]==(M-ar[i]))) {
+                if(I==-1 || abs(I-J)>abs(ar[i]-(M-ar[i]))) {
+                    if(ar[i]<(M-ar[i])) {
+                        I=ar[i];
+                        J=(M-ar[i]);
+                    } else {
+                        I=(M-ar[i]);
+                        J=(ar[i]);
+                    }
+
+                }
+            }
+        }
+
+        printf("Peter should buy books whose prices are %d and %d.\n\n",I,J);
     }
 }
